@@ -27,7 +27,7 @@ const Navbar = () => {
                         <NavLink to="./home">Home</NavLink>
                     </li>
                     <li>
-                        <NavLink to="./Gallery">Gallery</NavLink>
+                        <NavLink to="./gallery">Gallery</NavLink>
                     </li>
                     <li className="relative group">
                         <NavLink to="./artists">Artists</NavLink>
