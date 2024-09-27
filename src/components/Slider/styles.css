@@ -1,0 +1,53 @@
+.mySwiper {
+    height: 100vh; /* Fullscreen height */
+}
+  
+.slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    height: 100vh; /* Fullscreen height */
+}
+  
+.slide h1 {
+    color: #bd7c43;
+    font-size: 48px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    z-index: 9;
+}
+.slide h2 {
+    color: #bd7c43;
+    font-size: 48px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    z-index: 9;
+}
+
+.slide img {
+    width: 20%;
+    z-index: 9;
+}
+
+.slide::before {
+    content: ""; /* Necesario para crear el pseudo-elemento */
+    position: absolute; /* Posicionarlo absolutamente */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; /* Cubrir todo el contenedor */
+    background-color: rgba(0, 0, 0, 0.5); /* Color negro semitransparente */
+    z-index: 2; /* Asegurarse de que esté por encima de la imagen de fondo */
+}
+
+  /* Cambiar el color de los botones de navegación */
+.swiper-button-next,
+.swiper-button-prev {
+    color: #bd7c43; /* Cambia este color por el que desees */
+}
+
+/* Para agregar un hover effect */
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    color: #f1f1f1; /* Cambia el color al pasar el mouse */
+}

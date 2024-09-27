@@ -1,0 +1,17 @@
+.my-masonry-grid {
+  display: flex;
+  margin-left: -10px; /* Ajusta el margen de acuerdo a tus necesidades */
+  width: auto;
+}
+
+.my-masonry-grid_column {
+  padding-left: 5px; /* Espaciado entre columnas */
+  background-clip: padding-box;
+}
+
+.gallery-item {
+  width: 300px;
+  margin-bottom: 5px;
+}
+
+
