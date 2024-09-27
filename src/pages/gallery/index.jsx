@@ -7,11 +7,11 @@ import { NavLink } from 'react-router-dom';
 
 // Configuración para las columnas en diferentes tamaños de pantalla
 const breakpointColumnsObj = {
-    default: 6, // Tres columnas por defecto
-    1600: 4,    // Dos columnas si el ancho de la pantalla es menor a 1100px
-    1300: 3,    // Dos columnas si el ancho de la pantalla es menor a 1100px
-    1100: 2,    // Dos columnas si el ancho de la pantalla es menor a 1100px
-    700: 1      // Una columna si el ancho es menor a 700px
+    default: 5,
+    1600: 4,
+    1300: 3,
+    1100: 2,
+    700: 1
 };
 
 export default function Gallery() {
