@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 
 // Configuración para las columnas en diferentes tamaños de pantalla
 const breakpointColumnsObj = {
-    default: 5,
+    default: 3,
     1600: 4,
     1300: 3,
     1100: 2,
