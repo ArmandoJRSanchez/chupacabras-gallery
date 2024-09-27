@@ -53,7 +53,7 @@ export default function Gallery() {
                                     style={{ width: '100%' }}
                                 />
                                 <div className="flex justify-between items-center px-3 py-2 bg-black text-white">
-                                    <h3>{picture.title}</h3>
+                                    <p>{picture.title}</p>
                                     <p>{picture.artist}</p>
                                 </div>
                             </div>
