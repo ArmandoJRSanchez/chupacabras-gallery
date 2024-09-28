@@ -12,6 +12,7 @@
   "dependencies": {
     "@headlessui/react": "^2.1.8",
     "@heroicons/react": "^2.1.5",
+    "gsap": "^3.12.5",
     "i": "^0.3.7",
     "next-gallery": "^2.1.0",
     "npm": "^10.8.3",

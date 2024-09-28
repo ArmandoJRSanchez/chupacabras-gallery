@@ -1,11 +1,15 @@
-import { React, useContext } from 'react';
+import { React, useContext, useEffect, useRef } from 'react';
 import Masonry from 'react-masonry-css';
-import './Gallery.css'; // Asegúrate de agregar los estilos personalizados si es necesario.
+import './Gallery.css';
 import { GalleryContext } from '../../context';
 import { NavLink } from 'react-router-dom';
+import { gsap } from 'gsap';
 
 export default function Gallery() {
     const context = useContext(GalleryContext);
+
+    // Referencia para los items de la galería
+    const galleryRef = useRef([]);
 
     // Verifica si filteredPictures está disponible, de lo contrario usa un arreglo vacío
     const filteredPictures = context.filteredPictures || [];
@@ -16,16 +20,32 @@ export default function Gallery() {
     // Configuración dinámica para las columnas basadas en la longitud de la galería
     const breakpointColumnsObj = lengthGallery < 6
         ? {
-            default: lengthGallery,   // Si hay menos de 6 imágenes, usar 2 columnas por defecto
-            700: 1        // Y 1 columna en pantallas pequeñas
+            default: lengthGallery,
+            700: 1
         }
         : {
-            default: 6,   // Si hay 6 o más imágenes, usar 3 columnas por defecto
-            1600: 4,      // 4 columnas en pantallas grandes
-            1300: 3,      // 3 columnas en pantallas medianas
-            1100: 2,      // 2 columnas en pantallas pequeñas
-            700: 1        // 1 columna en pantallas muy pequeñas
+            default: 5,
+            1700: 6,
+            1600: 4,
+            1300: 3,
+            1100: 2,
+            700: 1
         };
+
+    // Usar GSAP para la animación de entrada de los elementos de la galería
+    useEffect(() => {
+        gsap.fromTo(
+            galleryRef.current,
+            { opacity: 0, y: 50 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                stagger: 0.2,
+                ease: 'power3.in'
+            }
+        );
+    }, [filteredPictures]);
 
     return (
         <>
@@ -50,13 +70,16 @@ export default function Gallery() {
                     </ul>
                 </div>
                 <Masonry
-                    breakpointCols={breakpointColumnsObj}  // Usar el breakpoint dinámico
+                    breakpointCols={breakpointColumnsObj}
                     className="my-masonry-grid"
                     columnClassName="my-masonry-grid_column"
                 >
                     {filteredPictures.map((picture, index) => (
                         <NavLink to={`/detail/${encodeURI(picture.title)}`} key={index}>
-                            <div className="gallery-item hover:scale-105 hover:shadow-xl rounded-lg overflow-hidden z-10">
+                            <div
+                                className="gallery-item hover:scale-105 hover:shadow-xl rounded-lg overflow-hidden z-10"
+                                ref={el => galleryRef.current[index] = el}  // Guardar la referencia del elemento
+                            >
                                 <img
                                     src={picture.src}
                                     alt={picture.title}
