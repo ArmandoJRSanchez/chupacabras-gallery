@@ -75,7 +75,7 @@ export default function Gallery() {
                     columnClassName="my-masonry-grid_column"
                 >
                     {filteredPictures.map((picture, index) => (
-                        <NavLink to={`/detail/${encodeURI(picture.title)}`} key={index}>
+                        <NavLink to={`/detail/${encodeURI(picture.title.replace(/\s+/g, '-'))}`} key={index}>
                             <div
                                 className="gallery-item hover:scale-105 hover:shadow-xl rounded-lg overflow-hidden z-10"
                                 ref={el => galleryRef.current[index] = el}  // Guardar la referencia del elemento

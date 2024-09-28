@@ -199,6 +199,8 @@ export const GalleryProvider = ({ children }) => {
     const [searchByTitle, setSearchByTitle] = useState(null)
     // get pictures by category
     const [searchByCategory, setSearchByCategory] = useState(null)
+    // get pictures by artists
+    const [searchByArtists, setSearchByArtists] = useState(null)
     // filtredby 
     const [filteredPictures, setFilteredPictures] = useState(null)
 
@@ -210,13 +212,20 @@ export const GalleryProvider = ({ children }) => {
     const filteredPicturesByCategory = (pictures, searchByCategory) => {
         return pictures?.filter((item) => item.category.toLowerCase().includes(searchByCategory.toLowerCase()))
     }
+    // function for filtred gallery artists 
+    const filteredPicturesByArtists = (pictures, searchByArtists) => {
+        return pictures?.filter((item) => item.artist.toLowerCase().includes(searchByArtists.toLowerCase()))
+    }
 
-    const filterBy = (searchType, pictures, searchByTitle, searchByCategory) => {
+    const filterBy = (searchType, pictures, searchByTitle, searchByCategory, searchByArtists) => {
         if (searchType === 'BY_TITLE') {
             return filteredPicturesByTitle(pictures, searchByTitle)
         }
         if (searchType === 'BY_CATEGORY') {
             return filteredPicturesByCategory(pictures, searchByCategory)
+        }
+        if (searchType === 'BY_ARTIST') {
+            return filteredPicturesByArtists(pictures, searchByArtists)
         }
         if (searchType === 'BY_TITLE_AND_CATEGORY') {
             return filteredPicturesByCategory(pictures, searchByCategory).filter((item) => item.title.toLowerCase().includes(searchByTitle.toLowerCase()))
@@ -227,11 +236,12 @@ export const GalleryProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        if (searchByTitle && searchByCategory) setFilteredPictures(filterBy('BY_TITLE_AND_CATEGORY', pictures, searchByTitle, searchByCategory))
-        if (searchByTitle && !searchByCategory) setFilteredPictures(filterBy('BY_TITLE', pictures, searchByTitle, searchByCategory))
-        if (!searchByTitle && searchByCategory) setFilteredPictures(filterBy('BY_CATEGORY', pictures, searchByTitle, searchByCategory))
-        if (!searchByTitle && !searchByCategory) setFilteredPictures(filterBy(null, pictures, searchByTitle, searchByCategory))
-    }, [pictures, searchByTitle, searchByCategory])
+        if (searchByTitle && searchByCategory) setFilteredPictures(filterBy('BY_TITLE_AND_CATEGORY', pictures, searchByTitle, searchByCategory, searchByArtists))
+        if (searchByTitle && !searchByCategory) setFilteredPictures(filterBy('BY_TITLE', pictures, searchByTitle, searchByCategory, searchByArtists))
+        if (!searchByTitle && searchByCategory) setFilteredPictures(filterBy('BY_CATEGORY', pictures, searchByTitle, searchByCategory, searchByArtists))
+        if (searchByArtists) setFilteredPictures(filterBy('BY_ARTIST', pictures, searchByTitle, searchByCategory, searchByArtists))
+        if (!searchByTitle && !searchByCategory) setFilteredPictures(filterBy(null, pictures, searchByTitle, searchByCategory, searchByArtists))
+    }, [pictures, searchByTitle, searchByCategory, searchByArtists])
 
     return (
         <GalleryContext.Provider value={{
@@ -242,7 +252,9 @@ export const GalleryProvider = ({ children }) => {
             filteredPictures,
             setSearchByTitle,
             categories,
-            setCategories
+            setCategories,
+            searchByArtists,
+            setSearchByArtists
         }}>
             {children}
         </GalleryContext.Provider>

@@ -24,13 +24,11 @@ body {
 .title-with-line {
   position: relative;
   display: inline-block;
-  padding-bottom: 20px; /* Espacio para la línea */
-  font-size: 24px; /* Tamaño del texto del título */
-  font-weight: bold;
+  padding-bottom: 28px; /* Espacio para la línea */
   background: url("../../assets/images/title-line.png") no-repeat;
   background-position: center bottom;
   background-size: contain; /* Ajusta la imagen para que siempre sea visible */
-  width: 280px;
+  width: auto;
 }
 
 

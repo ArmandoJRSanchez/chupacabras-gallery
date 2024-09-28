@@ -39,14 +39,10 @@ export default function Contact() {
                                         <label htmlFor="country" className="sr-only">Country</label>
                                         <select id="country" name="country" className="h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-9 text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm">
                                             <option>US</option>
-                                            <option>CA</option>
-                                            <option>EU</option>
+                                            <option>MX</option>
                                         </select>
-                                        <svg className="pointer-events-none absolute right-3 top-0 h-full w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                            <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
-                                        </svg>
                                     </div>
-                                    <input type="tel" name="phone-number" id="phone-number" autoComplete="tel" className="block w-full rounded-md border-0 px-3.5 py-2 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6" />
+                                    <input type="tel" name="phone-number" id="phone-number" autoComplete="tel" className="block w-full rounded-md border-0 px-3.5 py-2 pl-24 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6" />
                                 </div>
                             </div>
                             <div className="sm:col-span-2">
@@ -64,7 +60,7 @@ export default function Contact() {
                                 </div>
                                 <label className="text-sm leading-6 text-gray-600" id="switch-1-label">
                                     By selecting this, you agree to our
-                                    <a href="#" className="font-semibold text-black">privacy&nbsp;policy</a>.
+                                    <a href="#" className="font-semibold text-black"> privacy&nbsp;policy</a>.
                                 </label>
                             </div>
                         </div>
