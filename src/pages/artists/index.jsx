@@ -4,20 +4,6 @@ import { GalleryContext } from "../../context";
 import ArtistDetail from "../../components/Artists";
 
 export default function Artists() {
-    const context = useContext(GalleryContext);
-
-    const artist = window.location.pathname.split('/').filter(Boolean)[1];
-
-    if (artist !== undefined) {
-        return (
-            <>
-                <ArtistDetail
-                    title={artist.replace('-', ' ')}
-                />
-            </>
-        );
-    }
-
     return (
         <div className='w-full h-auto flex flex-col justify-between items-center mt-20 p-4'>
             <div className='flex flex-col justify-center items-center w-3/4 mb-20'>
@@ -28,7 +14,7 @@ export default function Artists() {
             </div>
 
             <div className="grid gap-3 grid-cols-3 w-full h-96 max-w-screen-lg">
-                <Link to="./jose-arias" onClick={() => context.setSearchByArtists('jose arias')}>
+                <Link to="./jose-arias">
                     <div className="bg-white cursor-pointer w-80 h-96 rounded-lg p-3 shadow-xl hover:scale-105">
                         <figure className="relative mb-2 w-full h-1/2">
                             <img className="w-full h-full object-cover rounded-lg" src="/artists/Jose Arias.png" alt="Jose Arias" />
@@ -43,7 +29,7 @@ export default function Artists() {
                     </div>
                 </Link>
 
-                <Link to="./marina-poltavets" onClick={() => context.setSearchByArtists('marina poltavets')}>
+                <Link to="./marina-poltavets">
                     <div className="bg-white cursor-pointer w-80 h-96 rounded-lg p-3 shadow-xl hover:scale-105">
                         <figure className="relative mb-2 w-full h-3/5">
                             <img className="w-full h-full object-cover rounded-lg" src="/artists/Marina Poltavets.png" alt="Marina Poltavets" />
