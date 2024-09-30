@@ -77,19 +77,23 @@ export default function Gallery() {
                     {filteredPictures.map((picture, index) => (
                         <NavLink to={`/detail/${encodeURI(picture.title.replace(/\s+/g, '-'))}`} key={index}>
                             <div
-                                className="gallery-item hover:scale-105 hover:shadow-xl overflow-hidden z-10"
+                                className="gallery-item hover:scale-105 hover:shadow-xl overflow-hidden z-1 relative"
                                 ref={el => galleryRef.current[index] = el}  // Guardar la referencia del elemento
                             >
                                 <img
                                     src={picture.src}
                                     alt={picture.title}
-                                    style={{ width: '100%' }}
+                                    className="w-full"
                                 />
-                                <div className="flex justify-between items-center px-3 py-2 bg-black text-white">
-                                    <p>{picture.title}</p>
-                                    <p>{picture.artist}</p>
+                                <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-white opacity-0 transition-opacity duration-300 ease-in-out hover:opacity-100">
+                                    <div className="text-center px-3">
+                                        <p>{picture.title}</p>
+                                        <p>{picture.artist}</p>
+                                    </div>
                                 </div>
                             </div>
+
+
                         </NavLink>
                     ))}
                 </Masonry>
