@@ -49,7 +49,7 @@ const Faq = () => {
     return (
         <>
             <div className="mx-auto flex justify-center items-center flex-col my-20">
-                <h1 className="title-with-line font-bold text-4xl md:text-5xl text-center">FAQ - Frequently Asked Questions</h1>
+                <h1 className="title-with-line font-bold text-4xl md:text-5xl text-center">Frequently Asked Questions</h1>
                 <div className="mt-8 space-y-6 w-2/3">
                     {faqs.map((faq, index) => (
                         <div key={index} className="border-b pb-4 cursor-pointer">
