@@ -1,70 +1,101 @@
-import { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useRef, useEffect } from "react";
 import { GalleryContext } from "../../context";
+import { NavLink } from "react-router-dom";
+import { FaShoppingBag } from "react-icons/fa";
+import { gsap } from 'gsap';
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const Artists = () => {
+gsap.registerPlugin(ScrollTrigger);
+
+export default function Detail() {
     const context = useContext(GalleryContext);
+    const currentPath = window.location.pathname;
 
-    // Obtén el artista de la URL
-    const artist = window.location.pathname.split('/').filter(Boolean)[1];
+    let picture = currentPath.split('/').filter(el => el !== '')[1];
 
-    // Actualiza el contexto solo si existe un artista en la URL
+    const containerRef = useRef(null);
+    const imageRefs = useRef([]);
+
+    // Usamos find() en lugar de filter() para obtener un solo objeto en lugar de un array
+    const pictureData = context.filteredPictures?.find((pic) => pic.title.toLowerCase() === picture.replace(/-/g, ' ').toLowerCase());
+
     useEffect(() => {
-        if (artist !== undefined) {
-            const searchByArtist = artist.replace('-', ' ');
-            context.setSearchByArtists(searchByArtist);
+        // Animación de entrada para las imágenes
+        gsap.from(imageRefs.current, {
+            opacity: 0,
+            y: 50,
+            stagger: 0.1,
+            duration: 1,
+            ease: "power3.out"
+        });
+    }, []);
+
+
+    const addToRefs = (el) => {
+        if (el && !imageRefs.current.includes(el)) {
+            imageRefs.current.push(el);
         }
-    }, [artist, context]); // Se ejecuta cuando cambia el valor de "artist" o "context"
+    };
 
-    // Renderizado condicional basado en si hay un artista en la URL
-    if (artist !== undefined) {
-        return (
-            <>
-                Artista cargado
-            </>
-        );
-    }
-
-    // Renderizado principal cuando no hay artista seleccionado
     return (
         <div className='w-full h-auto flex flex-col justify-between items-center mt-20 p-4'>
-            <div className='flex flex-col justify-center items-center w-3/4 mb-20'>
-                <h1 className="title-with-line font-bold text-4xl md:text-5xl text-center">Artists</h1>
-                <p className="text-center text-xl">
-                    Chupacabras Galeria and Studio is constantly working hard to create a platform for artists in order to support them and catapult their work into new levels. Here you can browse our growing members that have added works to the collection and see who is open to commission. You can explore each artist profile, biography and collection of works as well as request a commission through the studio.
-                </p>
+            <h1 className="title-with-line font-light uppercase text-3xl md:text-5xl text-center">
+                {pictureData?.title || 'Unknown'}
+            </h1>
+
+            <div className="flex flex-col lg:flex-row justify-center items-center mt-12 w-full max-w-screen-lg">
+                <div className="lg:w-1/2 w-full flex justify-center items-center mb-8 lg:mb-0">
+                    <figure className="w-3/4">
+                        <img className="p-6 w-full" src={`/pinturas/${pictureData?.title}.jpg`} alt={pictureData?.title || 'Image'} />
+                    </figure>
+                </div>
+                <div className="lg:w-1/2 w-full h-full flex flex-col items-center justify-center lg:items-start">
+                    <figure className="flex justify-center items-center ">
+                        <img className="object-cover rounded-full w-40 h-40 p-6" src={`/artists/${pictureData?.artist}.png`} alt={pictureData?.artist || 'Artist'} />
+                    </figure>
+                    <NavLink to={`/artists/${pictureData?.artist.replace(/\s+/g, '-')}`}>
+                        <h3 className="font-light underline text-xl uppercase">{pictureData?.artist}</h3>
+                    </NavLink>
+                    <p className="text-gray-400 text-center lg:text-left">{pictureData?.originArtist || "Mexico City"}</p>
+
+                    <div className="ml-0 lg:ml-6 mt-6 flex gap-3 flex-col w-full lg:w-auto">
+                        <p> Medium: {pictureData?.medium || "N/A"}</p>
+                        <p> Date: {pictureData?.date || "N/A"}</p>
+                        <p> Type: {pictureData?.type || "N/A"}</p>
+                        <p> Dimensions: {pictureData?.dimensiones || "N/A"}</p>
+                        <p> Available: {pictureData?.avalible || "N/A"}</p>
+                        <p> Price: {pictureData?.price || "N/A"}</p>
+                        <p> Category: {pictureData?.category || "N/A"}</p>
+                        <p> Material: {pictureData?.material || "N/A"}</p>
+                        <p> Description: {pictureData?.description || "N/A"}</p>
+                    </div>
+
+                    <div className="w-full lg:w-1/2 flex justify-center items-center p-6">
+                        <button className="bg-black rounded-lg flex justify-between items-center w-full text-white py-3 px-6 hover:bg-gray-600 hover:shadow-lg">
+                            Comprar
+                            <FaShoppingBag />
+                        </button>
+                    </div>
+                </div>
             </div>
 
-            <div className="grid gap-3 grid-cols-3 w-full h-96 max-w-screen-lg">
-                <Link to="./jose-arias">
-                    <div className="bg-white cursor-pointer w-80 h-96 rounded-lg p-3 shadow-xl hover:scale-105">
-                        <figure className="relative mb-2 w-full h-1/2">
-                            <img className="w-full h-full object-cover rounded-lg" src="/artists/Jose Arias.png" alt="Jose Arias" />
-                        </figure>
-                        <div className="flex flex-col h-20">
-                            <span className="text-sm font-light">Jose Arias</span>
-                            <span className="text-lg font-medium">Painter</span>
-                            <p className="text-justify">Jose Arias is a Mexican painter who has been painting for over 20 years. He has participated in several exhibitions in Mexico and the United States.
-                            </p>
-                        </div>
-                    </div>
-                </Link>
-                <Link to="./marina-poltavets">
-                    <div className="bg-white cursor-pointer w-80 h-96 rounded-lg p-3 shadow-xl hover:scale-105">
-                        <figure className="relative mb-2 w-full h-3/5">
-                            <img className="w-full h-full object-cover rounded-lg" src="/artists/Marina Poltavets.png" alt="Marina Poltavets" />
-                        </figure>
-                        <div className="flex flex-col h-20">
-                            <span className="text-sm font-light">Marina Poltavets</span>
-                            <span className="text-lg font-medium">Painter</span>
-                            <p className="text-justify">Marina Poltavets is a Mexican painter who has been painting for over 20 years. She has participated in several exhibitions in Mexico and the United States.
-                            </p>
-                        </div>
-                    </div>
-                </Link>
+            <h1 className="uppercase font-bold text-2xl w-auto my-6">More from this artist</h1>
+
+            <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 w-full max-w-screen-lg">
+                {
+                    context.pictures?.filter((picture) => picture.artist.toLowerCase() === pictureData?.artist.toLowerCase()).map((item, i) => {
+                        return (
+                            <NavLink className="flex justify-center items-center" key={i} to={`/detail/${item.title.replace(/\s+/g, '-')}/#`}>
+                                <figure
+                                    ref={addToRefs}
+                                    className="bg-white cursor-pointer flex justify-center items-center overflow-hidden w-32 h-32 rounded-lg shadow-xl hover:scale-105 transition-transform duration-300">
+                                    <img className="w-full h-full object-cover" src={`/pinturas/${item.title}.jpg`} alt="" />
+                                </figure>
+                            </NavLink>
+                        )
+                    })
+                }
             </div>
         </div>
     );
-};
-
-export default Artists;
+}
