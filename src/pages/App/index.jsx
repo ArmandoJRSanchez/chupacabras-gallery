@@ -2,7 +2,6 @@ import './App.css'
 import { BrowserRouter, useRoutes } from 'react-router-dom'
 import Home from '../home'
 import Contact from '../contact'
-import Faq from '../Faq'
 import Gallery from '../gallery'
 import Detail from '../detailPicture'
 import Artists from '../artists'
@@ -23,8 +22,7 @@ function App() {
       { path: '/contact', element: <Contact /> },
       { path: '/about-us', element: <About /> },
       { path: '/artists', element: <Artists /> },
-      { path: '/artists/*', element: <Artists /> },
-      { path: '/faq', element: <Faq /> },
+      { path: '/home', element: <Home /> },
       { path: '/detail/*', element: <Detail /> },
       { path: '/*', element: <NotFound /> },
     ])
