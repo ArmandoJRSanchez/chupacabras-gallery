@@ -28,7 +28,7 @@ body {
   background: url("../../assets/images/title-line.png") no-repeat;
   background-position: center bottom;
   background-size: contain; /* Ajusta la imagen para que siempre sea visible */
-  width: auto;
+  width: 25%;
 }
 
 

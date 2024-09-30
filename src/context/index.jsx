@@ -239,9 +239,10 @@ export const GalleryProvider = ({ children }) => {
         if (searchByTitle && searchByCategory) setFilteredPictures(filterBy('BY_TITLE_AND_CATEGORY', pictures, searchByTitle, searchByCategory, searchByArtists))
         if (searchByTitle && !searchByCategory) setFilteredPictures(filterBy('BY_TITLE', pictures, searchByTitle, searchByCategory, searchByArtists))
         if (!searchByTitle && searchByCategory) setFilteredPictures(filterBy('BY_CATEGORY', pictures, searchByTitle, searchByCategory, searchByArtists))
-        if (searchByArtists) setFilteredPictures(filterBy('BY_ARTIST', pictures, searchByTitle, searchByCategory, searchByArtists))
-        if (!searchByTitle && !searchByCategory) setFilteredPictures(filterBy(null, pictures, searchByTitle, searchByCategory, searchByArtists))
+        if (!searchByTitle && !searchByCategory && searchByArtists) setFilteredPictures(filterBy('BY_ARTIST', pictures, searchByTitle, searchByCategory, searchByArtists))
+        if (!searchByTitle && !searchByCategory && !searchByArtists) setFilteredPictures(filterBy(null, pictures, searchByTitle, searchByCategory, searchByArtists))
     }, [pictures, searchByTitle, searchByCategory, searchByArtists])
+
 
     return (
         <GalleryContext.Provider value={{
