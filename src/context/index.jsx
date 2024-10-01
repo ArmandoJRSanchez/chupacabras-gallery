@@ -230,7 +230,7 @@ export const GalleryProvider = ({ children }) => {
         if (searchType === 'BY_TITLE_AND_CATEGORY') {
             return filteredPicturesByCategory(pictures, searchByCategory).filter((item) => item.title.toLowerCase().includes(searchByTitle.toLowerCase()))
         }
-        if (!searchType) {
+        if (!searchType || searchType === undefined) {
             return pictures
         }
     }

@@ -1,100 +1,112 @@
-import { useContext, useRef, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { GalleryContext } from "../../context";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaShoppingBag } from "react-icons/fa";
-import { gsap } from 'gsap';
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Slider from "react-slick";
 
-gsap.registerPlugin(ScrollTrigger);
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import PictureDetail from "../../components/PictureDetail";
 
 export default function Detail() {
     const context = useContext(GalleryContext);
     const currentPath = window.location.pathname;
+    const sliderRef = useRef(null);
+    const navigate = useNavigate();
 
-    let picture = currentPath.split('/').filter(el => el !== '')[1];
 
-    const containerRef = useRef(null);
-    const imageRefs = useRef([]);
 
-    // Usamos find() en lugar de filter() para obtener un solo objeto en lugar de un array
-    const pictureData = context.filteredPictures?.find((pic) => pic.title.toLowerCase() === picture.replace(/-/g, ' ').toLowerCase());
+    // Extraemos el nombre de la imagen desde la ruta
+    const picture = currentPath.split('/').filter(el => el !== '')[1];
+
+
+    // Obtenemos los datos de la imagen correspondiente
+    const pictureData = context.filteredPictures?.find((pic) =>
+        pic.title.toLowerCase() === picture.replace(/-/g, ' ').toLowerCase()
+    );
+
+
+
+
+    // Filtramos las imágenes del mismo artista
+    const filteredPictures = context.pictures?.filter((item) =>
+        item.artist.toLowerCase() === pictureData.artist.toLowerCase()
+    );
+
+    // Encontramos el índice de la imagen que coincide con 'picture'
+    const defaultImageIndex = filteredPictures?.findIndex((item) =>
+        item.title.toLowerCase() === picture.replace(/-/g, ' ').toLowerCase()
+    );
 
     useEffect(() => {
-        // Animación de entrada para las imágenes
-        gsap.from(imageRefs.current, {
-            opacity: 0,
-            y: 50,
-            stagger: 0.1,
-            duration: 1,
-            ease: "power3.out"
-        });
-    }, []);
-
-
-    const addToRefs = (el) => {
-        if (el && !imageRefs.current.includes(el)) {
-            imageRefs.current.push(el);
+        // Asegúrate de que sliderRef y defaultImageIndex existan antes de intentar mover el carrusel
+        if (sliderRef.current && defaultImageIndex !== -1) {
+            sliderRef.current.slickGoTo(defaultImageIndex);
         }
+    }, [defaultImageIndex]);
+
+    // Configuración del carrusel (Slider)
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        afterChange: (current) => {
+            const newPicture = filteredPictures[current]?.title.replace(/\s+/g, '-');
+            if (newPicture) {
+                navigate(`/detail/${newPicture}`);
+            }
+        },
     };
 
     return (
-        <div className='w-full h-auto flex flex-col justify-between items-center mt-20 p-4'>
-            <h1 className="title-with-line font-light uppercase text-3xl md:text-5xl text-center">
-                {pictureData?.title || 'Unknown'}
-            </h1>
-
-            <div className="flex flex-col lg:flex-row justify-center items-center mt-12 w-full max-w-screen-lg">
-                <div className="lg:w-1/2 w-full flex justify-center items-center mb-8 lg:mb-0">
-                    <figure className="w-3/4">
-                        <img className="p-6 w-full" src={`/pinturas/${pictureData?.title}.jpg`} alt={pictureData?.title || 'Image'} />
-                    </figure>
-                </div>
-                <div className="lg:w-1/2 w-full h-full flex flex-col items-center justify-center lg:items-start">
-                    <figure className="flex justify-center items-center ">
-                        <img className="object-cover rounded-full w-40 h-40 p-6" src={`/artists/${pictureData?.artist}.png`} alt={pictureData?.artist || 'Artist'} />
-                    </figure>
-                    <NavLink to={`/artists/${pictureData?.artist.replace(/\s+/g, '-')}`}>
-                        <h3 className="font-light underline text-xl uppercase">{pictureData?.artist}</h3>
-                    </NavLink>
-                    <p className="text-gray-400 text-center lg:text-left">{pictureData?.originArtist || "Mexico City"}</p>
-
-                    <div className="ml-0 lg:ml-6 mt-6 flex gap-3 flex-col w-full lg:w-auto">
-                        <p> Medium: {pictureData?.medium || "N/A"}</p>
-                        <p> Date: {pictureData?.date || "N/A"}</p>
-                        <p> Type: {pictureData?.type || "N/A"}</p>
-                        <p> Dimensions: {pictureData?.dimensiones || "N/A"}</p>
-                        <p> Available: {pictureData?.avalible || "N/A"}</p>
-                        <p> Price: {pictureData?.price || "N/A"}</p>
-                        <p> Category: {pictureData?.category || "N/A"}</p>
-                        <p> Material: {pictureData?.material || "N/A"}</p>
-                        <p> Description: {pictureData?.description || "N/A"}</p>
-                    </div>
-
-                    <div className="w-full lg:w-1/2 flex justify-center items-center p-6">
-                        <button className="bg-black rounded-lg flex justify-between items-center w-full text-white py-3 px-6 hover:bg-gray-600 hover:shadow-lg">
-                            Comprar
-                            <FaShoppingBag />
-                        </button>
-                    </div>
-                </div>
+        <div className="flex flex-col items-center w-full mt-20">
+            <div className="w-full max-w-screen-lg relative">
+                <Slider ref={sliderRef} {...settings}>
+                    {filteredPictures?.map((item, index) => (
+                        <PictureDetail key={index} item={item} />
+                    ))}
+                </Slider>
             </div>
 
-            <h1 className="uppercase font-bold text-2xl w-auto my-6">More from this artist</h1>
-
-            <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 w-full max-w-screen-lg">
-                {
-                    context.pictures?.filter((picture) => picture.artist.toLowerCase() === pictureData?.artist.toLowerCase()).map((item, i) => {
-                        return (
-                            <NavLink className="flex justify-center items-center" key={i} to={`/detail/${item.title.replace(/\s+/g, '-')}/#`}>
-                                <figure
-                                    ref={addToRefs}
-                                    className="bg-white cursor-pointer flex justify-center items-center overflow-hidden w-32 h-32 rounded-lg shadow-xl hover:scale-105 transition-transform duration-300">
-                                    <img className="w-full h-full object-cover" src={`/pinturas/${item.title}.jpg`} alt="" />
-                                </figure>
-                            </NavLink>
-                        )
-                    })
-                }
+            {/* Detalles de la obra actual */}
+            <div className="flex flex-col items-center mt-8 w-full max-w-screen-lg">
+                <hr className="border-gray-300 my-2 w-full" />
+                <h1 className="title-with-line font-bold text-4xl md:text-5xl text-center w-full">{pictureData.title}</h1>
+                <div className="w-full flex justify-between items-center">
+                    <div className="w-80 flex flex-col justify-center items-center">
+                        <figure className="flex justify-center items-center">
+                            <img
+                                className="object-cover rounded-full w-40 h-40 p-6"
+                                src={`/artists/${pictureData.artist}.png`}
+                                alt={pictureData.artist || 'Artist'}
+                            />
+                        </figure>
+                        <NavLink to={`/artists/${pictureData.artist.replace(/\s+/g, '-')}`}>
+                            <h3 className="font-light underline text-xl uppercase">{pictureData.artist}</h3>
+                        </NavLink>
+                        <p className="text-gray-400 text-center lg:text-left">{pictureData.originArtist || "Mexico City"}</p>
+                    </div>
+                    <div className="ml-0 lg:ml-6 mt-6 grid grid-cols-1 gap-3 lg:grid-cols-3 lg:w-auto">
+                        <p>Medium: {pictureData.medium || "N/A"}</p>
+                        <p>Date: {pictureData.date || "N/A"}</p>
+                        <p>Type: {pictureData.type || "N/A"}</p>
+                        <p>Dimensions: {pictureData.dimensiones || "N/A"}</p>
+                        <p>Available: {pictureData.available || "N/A"}</p>
+                        <p>Price: $ {pictureData.price || "N/A"}</p>
+                        <p>Category: {pictureData.category || "N/A"}</p>
+                        <p>Material: {pictureData.material || "N/A"}</p>
+                        <p>Description: {pictureData.description || "N/A"}</p>
+                    </div>
+                </div>
+                <hr className="border-gray-300 my-2 w-full" />
+                <div className="w-80 flex justify-center items-center p-6">
+                    <button className="bg-black rounded-lg flex justify-between items-center w-full text-white py-3 px-6 hover:bg-gray-600 hover:shadow-lg">
+                        Add to Cart
+                        <FaShoppingBag />
+                    </button>
+                </div>
             </div>
         </div>
     );
