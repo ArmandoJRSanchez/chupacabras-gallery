@@ -1,7 +1,5 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { GalleryContext } from "../../context";
-import ArtistDetail from "../../components/Artists";
+
 
 export default function Artists() {
     return (
@@ -14,7 +12,7 @@ export default function Artists() {
             </div>
 
             <div className="grid gap-3 grid-cols-3 w-full h-96 max-w-screen-lg">
-                <Link to="./jose-arias">
+                <Link to="/artist/jose-arias">
                     <div className="bg-white cursor-pointer w-80 h-96 rounded-lg p-3 shadow-xl hover:scale-105">
                         <figure className="relative mb-2 w-full h-1/2">
                             <img className="w-full h-full object-cover rounded-lg" src="/artists/Jose Arias.png" alt="Jose Arias" />
@@ -29,7 +27,7 @@ export default function Artists() {
                     </div>
                 </Link>
 
-                <Link to="./marina-poltavets">
+                <Link to="/artist/marina-poltavets">
                     <div className="bg-white cursor-pointer w-80 h-96 rounded-lg p-3 shadow-xl hover:scale-105">
                         <figure className="relative mb-2 w-full h-3/5">
                             <img className="w-full h-full object-cover rounded-lg" src="/artists/Marina Poltavets.png" alt="Marina Poltavets" />
