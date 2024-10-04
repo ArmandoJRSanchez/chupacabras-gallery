@@ -12,12 +12,12 @@ import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
 export default function Detail() {
     const context = useContext(GalleryContext);
-    const currentPath = window.location.pathname;
+    const currentPath = window.location.hash;
     const sliderRef = useRef(null);
     const navigate = useNavigate();
 
     // Extraemos el nombre de la imagen desde la ruta
-    const picture = currentPath.split('/').filter(el => el !== '')[1];
+    const picture = currentPath.split('/').filter(el => el !== '')[2];
 
     // Obtenemos los datos de la imagen correspondiente
     const pictureData = context.pictures?.find((pic) =>
