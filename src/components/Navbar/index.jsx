@@ -33,8 +33,8 @@ const Navbar = () => {
                         <NavLink to="./artists">Artists</NavLink>
                         {/* Submenú Artists*/}
                         <ul className="absolute w-52 h-auto left-0 top-120 hidden bg-black group-hover:flex group-hover:flex-col group-hover:justify-center group-hover:items-center">
-                            <li className="w-36 h-6 mx-2 mb-3"><NavLink to="./artists">Artists Catlogue</NavLink></li>
-                            <li className="w-36 h-6 mx-2 mb-3"><NavLink to="./become-artists">Become an Artists</NavLink></li>
+                            <li className="w-36 h-6 mx-2 mb-3"><NavLink to="./artists">Artists Catalogue</NavLink></li>
+                            <li className="w-36 h-6 mx-2 mb-3"><NavLink to="./become-artists">Become an Artist</NavLink></li>
                             <li className="w-36 h-6 mx-2 mb-3"><NavLink to="./commissions">Commissions</NavLink></li>
                         </ul>
                     </li>
