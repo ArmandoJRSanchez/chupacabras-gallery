@@ -35,36 +35,30 @@ body {
   display: flex!important;
 }
 
-.slick-prev {
+.slick-prev, .slick-next{
+  color: gray!important;
   width: 50px!important;
-  left: 0!important;
-  position: absolute!important;
   height: 50px!important;
-  background: #000!important;
-  z-index: 1!important;
-  border-radius: 50%!important;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23)!important;
 }
 
 .slick-next {
-  width: 50px!important;
-  right: 0!important;
-  position: absolute!important;
-  height: 50px!important;
-  background: #000!important;
-  z-index: 1!important;
-  border-radius: 50%!important;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23)!important;
+  right: 0px!important;
+}
+.slick-prev {
+  left: 0px!important;
 }
 
-  .slick-prev:focus,
-  .slick-prev:hover,
-  .slick-next:hover,
-  .slick-next:focus {
-    color: transparent;
-    outline: none;
-    background: gray;
-  }
+.slick-prev:before, .slick-next:before {
+  font-family: 'slick';
+  font-size: 50px;
+  line-height: 1;
+  opacity: .75;
+  color: black!important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
 
   #footer::before {
     transform: translateY(-100px);

@@ -23,7 +23,6 @@ const Footer = () => {
 
             <h4 className="mt-6 text-center text-sm sm:text-base flex flex-col sm:flex-row items-center gap-2">
                 © {date} Chupacabras Studio Gallery. All rights reserved. Designed by Asicom Graphics
-                <FaHeart className="text-red-600" />
             </h4>
         </footer>
     );

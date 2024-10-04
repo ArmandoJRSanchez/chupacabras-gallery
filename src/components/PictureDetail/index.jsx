@@ -31,19 +31,22 @@ const PictureDetail = ({ item }) => {
     }, [scale]); // Asegúrate de que useEffect escuche los cambios de 'scale'
 
     return (
-        <div className="w-full flex justify-center items-center flex-important relative">
+        <div className="w-full h-auto flex justify-center items-center flex-important relative">
             <img
                 ref={imgRef}
-                className="h-96 transition-transform duration-300 hover:cursor-zoom-in focus:cursor-move"
+                className="transition-transform duration-300 hover:cursor-zoom-in focus:cursor-move"
                 src={`/pinturas/${item.title}.jpg`}
                 alt={item.title}
-                style={{ transform: `scale(${scale})` }} // Aplica la transformación de escala
+                style={{
+                    transform: `scale(${scale})`,
+                    height: 600
+                }} // Aplica la transformación de escala
             />
             <span
-                className="absolute bottom-4 z-10 right-2/3 w-auto h-auto p-3 border shadow-xl rounded-full bg-white cursor-pointer"
+                className="absolute bottom-4 z-10 right-2/3 w-auto h-auto p-1 border shadow-xl rounded-full bg-white cursor-pointer"
                 onClick={() => setScale(1)} // Resetea el zoom al hacer clic en el botón
             >
-                <BiZoomOut className="text-2xl" />
+                <BiZoomOut />
             </span>
             <span
                 className="absolute bottom-4 z-10 right-96 w-auto h-auto px-3 shadow-xl rounded-full bg-black/40 text-white "
