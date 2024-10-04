@@ -1,0 +1,10 @@
+# Redirigir todas las solicitudes al index.html dentro de /dist
+RewriteEngine On
+
+# Establecer la carpeta base como /dist
+RewriteBase /
+
+# Si el archivo o directorio solicitado no existe, redirigir a /dist/index.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /dist/index.html [L]
