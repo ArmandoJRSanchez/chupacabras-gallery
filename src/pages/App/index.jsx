@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter, useRoutes } from 'react-router-dom'
+import { HashRouter, useRoutes } from 'react-router-dom'
 import Home from '../home'
 import Contact from '../contact'
 import Faq from '../Faq'
@@ -34,13 +34,13 @@ function App() {
 
   return (
     <GalleryProvider>
-      <BrowserRouter>
+      <HashRouter>
         <Navbar />
         <Layout>
           <AppRoutes />
         </Layout>
         <Footer />
-      </BrowserRouter>
+      </HashRouter>
     </GalleryProvider>
   )
 }
